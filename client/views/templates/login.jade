@@ -1,0 +1,36 @@
+//
+   @author: Alexander.Davidenko
+   @date: 9/17/15
+
+md-content
+    login-steps-menu(steps="steps")
+    .center-form
+        form(name="loginForm")
+            md-input-container
+                label Login
+                input(ng-model="userData.login" name="login" ng-required="true" md-maxlength="30" autofocus="true")
+                div(ng-messages="loginForm.login.$error")
+                    div(ng-message="required") This is required.
+                    div(ng-message="md-maxlength") The login has to be less than 30 characters long.
+
+            md-input-container
+                label Email
+                input(ng-model="userData.email" name="email" ng-required="true" type="email")
+                div(ng-messages="loginForm.email.$error")
+                    div(ng-message="required") This is required.
+                    div(ng-message="email") Email is not valid
+
+            md-input-container
+                label Password
+                input(ng-model="userData.password" name="password" type="password" ng-required="true")
+                div(ng-messages="loginForm.password.$error")
+                    div(ng-message="required") This is required.
+
+            md-input-container
+                label Password confirmation
+                input(ng-model="userData.password_confirmation" name="password_confirmation" type="password" ng-required="true" password-validator=)
+                div(ng-messages="loginForm.password_confirmation.$error")
+                    div(ng-message="required") This is required.
+                    div(ng-message="passwordConfirmation") Password confirmation is not correct
+
+            md-button.next-button(type="submit" ng-click="nextStep()" ng-disabled="!loginForm.$valid") Next

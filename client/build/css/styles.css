@@ -7,3 +7,14 @@ section {
 .center-form {
   width: 300px;
   margin: 0 auto; }
+
+.next-button {
+  float: right; }
+
+form md-datepicker {
+  position: relative;
+  left: -16px; }
+  form md-datepicker .md-datepicker-input-container {
+    margin-left: 0; }
+  form md-datepicker .md-datepicker-button.md-icon-button {
+    margin-right: 0; }

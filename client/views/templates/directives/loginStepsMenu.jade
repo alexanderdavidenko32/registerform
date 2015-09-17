@@ -1,0 +1,8 @@
+//
+   @author: Alexander.Davidenko 
+   @date: 9/17/15
+
+
+ul
+   li(ng-repeat="step in steps track by $index")
+      a(ui-sref="{{step.name}}") {{step.text}}

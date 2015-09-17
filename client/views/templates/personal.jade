@@ -2,4 +2,54 @@
    @author: Alexander.Davidenko 
    @date: 9/17/15
 
+md-content
+    ul
+        li
+            a(href="/") Login
+        li
+            a(href="/personal") Personal
 
+    .center-form
+        form(name="personalForm")
+            md-input-container
+                label Name
+                input(ng-model="userData.name" name="name" ng-required="true" md-maxlength="30" autofocus="true")
+                div(ng-messages="personalForm.name.$error")
+                    div(ng-message="required") This is required.
+                    div(ng-message="md-maxlength") The name has to be less than 30 characters long.
+            md-input-container
+                label Last name
+                input(ng-model="userData.lastName" name="last_name" ng-required="true")
+                div(ng-messages="personalForm.last_name.$error")
+                    div(ng-message="required") This is required.
+
+            md-input-container
+                label Birthday
+                input(ng-model="userData.birthday" name="birthday" ng-required="true" type="hidden")
+
+            md-datepicker(ng-model="userData.birthday" aria-label="birthday")
+
+            md-input-container
+                div(ng-messages="personalForm.birthday.$error")
+                    div(ng-message="required") This is required.
+
+            md-input-container
+                input(ng-model="userData.userGender" name="user_gender" ng-required="true" type="hidden")
+
+            md-input-container
+                label Gender
+                md-select(ng-model="userData.userGender" aria-label="gender")
+                    md-option(ng-repeat="gender in genders" ng-value="gender.id") {{ gender.text }}
+
+                div(ng-messages="personalForm.user_gender.$error")
+                    div(ng-message="required") This is required.
+
+            md-input-container
+                label Additional info
+                textarea(ng-model="userData.additionalInfo" md-maxlength="512" name="additional_info")
+
+                div(ng-messages="personalForm.additional_info.$error")
+                    div(ng-message="required") Length of this field is limited to 512 characters
+
+
+            md-button.next-button(type="submit" ng-click="nextStep()" ng-disabled="!personalForm.$valid") Next

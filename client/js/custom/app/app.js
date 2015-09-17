@@ -6,5 +6,5 @@
     'use strict';
 
     angular.
-        module('app', ['ngResource', 'ngCookies', 'ui.router', 'templates', 'ngMaterial', 'ngMessages']);
+        module('app', ['ngResource', 'ngCookies', 'ui.router', 'templates', 'ngMaterial', 'ngMessages', 'ngAnimate', 'autofocus']);
 })();
