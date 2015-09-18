@@ -1,0 +1,33 @@
+//
+   @author: Alexander.Davidenko 
+   @date: 9/18/15
+
+
+md-content
+    login-steps-menu(steps="steps")
+
+    .center-form
+        form(name="contactsForm")
+            md-input-container
+                label Phone
+                input(ng-model="userData.phone" name="phone" ng-required="true" autofocus="true")
+                div(ng-messages="contactsForm.phone.$error")
+                    div(ng-message="required") This is required.
+
+            md-input-container
+                label Country
+                input(ng-model="userData.country" name="contry" ng-required="true")
+                div(ng-messages="contactsForm.contry.$error")
+                    div(ng-message="required") This is required.
+
+            md-input-container
+                label City
+                input(ng-model="userData.city" name="city" ng-required="true")
+                div(ng-messages="contactsForm.city.$error")
+                    div(ng-message="required") This is required.
+
+            md-input-container
+                label Address
+                input(ng-model="userData.address" name="address")
+
+        md-button.next-button(type="submit" ng-click="nextStep()" ng-disabled="!contactsForm.$valid") Next

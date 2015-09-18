@@ -14,7 +14,33 @@ section {
 .next-button {
   float: right;
 }
+.terms-of-use {
+  height: 300px;
+  overflow: auto;
+}
 
+.active {
+  color: red;
+}
+.steps-menu {
+  overflow: hidden;
+  text-align: center;
+
+  ul {
+    list-style: none;
+
+    li {
+      display: inline-block;
+    }
+  }
+}
+.users {
+  .user {
+    i, span {
+      vertical-align: middle;
+    }
+  }
+}
 // datepicker fix
 form {
   md-datepicker {

@@ -17,7 +17,7 @@
 
             $scope.nextStep = function() {
                 if ($scope.personalForm.$valid) {
-                    $state.go('login');
+                    $state.go('contacts');
                 }
             }
         });

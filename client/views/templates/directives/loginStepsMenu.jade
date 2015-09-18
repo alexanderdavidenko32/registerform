@@ -2,7 +2,7 @@
    @author: Alexander.Davidenko 
    @date: 9/17/15
 
-
-ul
-   li(ng-repeat="step in steps track by $index")
-      a(ui-sref="{{step.name}}") {{step.text}}
+.steps-menu
+    ul
+        li(ng-repeat="step in steps track by $index")
+            md-button(ui-sref="{{step.name}}" ng-class="{'md-primary': step.active}" ng-disabled="!step.enabled") {{step.text}}

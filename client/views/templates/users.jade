@@ -1,0 +1,16 @@
+//
+   @author: Alexander.Davidenko 
+   @date: 9/18/15
+
+md-content
+    login-steps-menu(steps="steps")
+
+    .center-form
+        md-content
+            md-list.users
+                md-list-item(class="md-2-line" ng-repeat="user in users")
+                    span.user
+                        i.material-icons person
+                        span {{user.name}}
+
+        md-button.next-button(type="submit" ng-click="nextStep()") Next

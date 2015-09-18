@@ -12,12 +12,37 @@
                 restrict: 'E',
                 templateUrl: 'directives/loginStepsMenu.html',
 
-                controller: function ($scope, $state, $filter) {
+                controller: function ($scope, $state, $filter, validationService) {
                     var filter = $filter('filter'),
-                        states = $state.get();
+                        states = $state.get(),
+                        steps = filter(states, {isStep: true});
 
-                    $scope.steps = filter(states, {isStep: true});
-                    console.log($scope.steps);
+                    var isStepEnabled = function(item) {
+                        return steps.reduce(function (previousValue, currentValue, index) {
+                            var tmpStep = steps[index];
+
+                            if (previousValue === false) {
+                                return false;
+                            } else {
+                                if (tmpStep.stepOrder <= item.stepOrder) {
+                                    return validationService.isStepValid(steps[index]);
+                                } else {
+                                    return previousValue;
+                                }
+                            }
+                        }, true);
+                    };
+
+                    steps.map(function (item, index) {
+                        item.active = item === $state.current;
+
+                        if ($state.current  === item ) {
+                            item.enabled = true;
+                        } else {
+                            item.enabled = isStepEnabled(item);
+                        }
+                    });
+                    $scope.steps = steps;
                 }
             };
         });

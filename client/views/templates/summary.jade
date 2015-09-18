@@ -1,0 +1,26 @@
+//
+   @author: Alexander.Davidenko 
+   @date: 9/18/15
+
+md-content
+    login-steps-menu(steps="steps")
+
+    .center-form
+        md-content
+            div Login : {{login}}
+            div Email : {{email}}
+            div Password : {{password}}
+            div Password confirmation : {{password_confirmation}}
+
+            div Name : {{name}}
+            div Last name : {{lastName}}
+            div Gender : {{gender}}
+            div Additional info : {{additionalInfo}}
+
+            div Phone : {{phone}}
+            div Country : {{country}}
+            div City : {{city}}
+            div Address : {{address}}
+
+            div Terms : {{terms}}
+        md-button.next-button(type="submit" ng-click="nextStep()") Next

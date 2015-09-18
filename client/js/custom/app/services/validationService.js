@@ -10,73 +10,52 @@
         .service('validationService', function (userData) {
             var validation = {};
 
-            var isBlank = function(field) {
-                if (field) {
-                    return false;
-                }
-                return true;
+            var isBlank = function(value) {
+                return !value;
+
             };
-            var isCharactersFit = function(field) {
-                if (field.length > 30) {
-                    return false;
-                }
-                return true;
+            var isCharactersFit = function(value) {
+                return value.length <= 30;
             };
 
-            var isEmail = function(field) {
-                var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-                return re.test(userData.email);
+            var isEmail = function(value) {
+                var re = /[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*/i;
+                return re.test(value);
             };
 
-            //validation.isLoginDataValid = function (form) {
-            validation.validateForm = function (form) {
+            validation.isStepValid = function (step) {
+                var stepValidators = {
+                    'login': function () {
+                        if (isBlank(userData.login) || !isCharactersFit(userData.login)) {
+                            return false;
+                        }
+                        if (isBlank(userData.email) || !isEmail(userData.email)) {
+                            return false;
+                        }
+                        if (isBlank(userData.password) || isBlank(userData.password_confirmation)) {
+                            return false;
+                        }
+                        return userData.password === userData.password_confirmation;
 
+                    },
+                    'personal': function () {
+                        if (isBlank(userData.name) || !isCharactersFit(userData.name)) {
+                            return false;
+                        }
+                        return !(isBlank(userData.lastName) || isBlank(userData.birthday) || isBlank(userData.userGender));
 
-                if (isBlank(userData.login)) {
-                    form['login'].$error.required = 'it\'s blank';
-                    form.$setValidity(undefined, false);
-                } else {
-                    form.$setValidity(undefined, true);
-                }
+                    },
+                    'contacts': function () {
+                        return !(isBlank(userData.phone) || isBlank(userData.country) || isBlank(userData.city));
 
-                if (!isCharactersFit(userData.login)) {
-                    form['login'].$error['md-maxlength'] = 'The login has to be less than 30 characters long.';
-                    form.$setValidity(undefined, false);
-                } else {
-                    form.$setValidity(undefined, true);
-                }
-                //if (!userData.login || userData.login.length > 30) {
-                //    return false;
-                //}
+                    },
+                    'terms': function () {
+                        return !isBlank(userData.terms);
 
-                if (isBlank(userData.email)) {
-                    form['email'].$error.required = 'it\'s blank';
-                    form.$setValidity(undefined, false);
-                } else {
-                    form.$setValidity(undefined, true);
-                }
-                //if (!isEmail(userData.email)) {
-                //    form.email.$setValidity('email', false);
-                //    form['email'].$error.email = 'Email is not valid';
-                //    form.$setValidity(undefined, false);
-                //} else {
-                //    form.email.$setValidity('email', true);
-                //    form.$setValidity(undefined, true);
-                //}
+                    }
 
-                //if (!userData.password) {
-                //    return false;
-                //}
-                //
-                //if (!userData.password_confirmation) {
-                //    return false;
-                //}
-                //
-                //if (userData.password !== userData.password_confirmation) {
-                //    return false;
-                //}
-
-                return true;
+                };
+                return stepValidators[step.name] && stepValidators[step.name]();
             };
             return validation;
         });

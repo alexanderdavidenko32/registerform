@@ -11,6 +11,24 @@ section {
 .next-button {
   float: right; }
 
+.terms-of-use {
+  height: 300px;
+  overflow: auto; }
+
+.active {
+  color: red; }
+
+.steps-menu {
+  overflow: hidden;
+  text-align: center; }
+  .steps-menu ul {
+    list-style: none; }
+    .steps-menu ul li {
+      display: inline-block; }
+
+.users .user i, .users .user span {
+  vertical-align: middle; }
+
 form md-datepicker {
   position: relative;
   left: -16px; }

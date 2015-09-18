@@ -3,11 +3,7 @@
    @date: 9/17/15
 
 md-content
-    ul
-        li
-            a(href="/") Login
-        li
-            a(href="/personal") Personal
+    login-steps-menu(steps="steps")
 
     .center-form
         form(name="personalForm")
@@ -17,6 +13,7 @@ md-content
                 div(ng-messages="personalForm.name.$error")
                     div(ng-message="required") This is required.
                     div(ng-message="md-maxlength") The name has to be less than 30 characters long.
+
             md-input-container
                 label Last name
                 input(ng-model="userData.lastName" name="last_name" ng-required="true")
@@ -34,7 +31,7 @@ md-content
                     div(ng-message="required") This is required.
 
             md-input-container
-                input(ng-model="userData.userGender" name="user_gender" ng-required="true" type="hidden")
+                input(ng-model="userData.userGender" name="user_gender" ng-required="true" type="hidden" aria-label="user gender")
 
             md-input-container
                 label Gender

@@ -16,6 +16,13 @@
             name: undefined,
             lastName: undefined,
             gender: undefined,
-            additionalInfo: undefined
+            additionalInfo: undefined,
+
+            phone: undefined,
+            country: undefined,
+            city: undefined,
+            address: undefined,
+
+            terms: undefined
         });
 })();
