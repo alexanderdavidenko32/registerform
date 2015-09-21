@@ -12,6 +12,7 @@
                 restrict: 'E',
                 templateUrl: 'directives/loginStepsMenu.html',
 
+                //TODO: think of another behaviour
                 controller: function ($scope, $state, $filter, validationService) {
                     var filter = $filter('filter'),
                         states = $state.get(),

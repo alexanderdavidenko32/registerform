@@ -31,14 +31,14 @@ md-content
                     div(ng-message="required") This is required.
 
             md-input-container
-                input(ng-model="userData.userGender" name="user_gender" ng-required="true" type="hidden" aria-label="user gender")
+                input(ng-model="userData.gender" name="gender" ng-required="true" type="hidden" aria-label="user gender")
 
             md-input-container
                 label Gender
-                md-select(ng-model="userData.userGender" aria-label="gender")
+                md-select(ng-model="userData.gender" aria-label="gender")
                     md-option(ng-repeat="gender in genders" ng-value="gender.id") {{ gender.text }}
 
-                div(ng-messages="personalForm.user_gender.$error")
+                div(ng-messages="personalForm.gender.$error")
                     div(ng-message="required") This is required.
 
             md-input-container

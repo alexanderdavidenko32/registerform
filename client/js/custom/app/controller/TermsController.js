@@ -7,12 +7,15 @@
 
     angular
         .module('app')
-        .controller('TermsController', function ($scope, $state, userData, validationService) {
+        .controller('TermsController', function ($scope, $state, userData, userService) {
             $scope.userData = userData;
 
             $scope.nextStep = function() {
                 if ($scope.termsForm.$valid) {
-                    $state.go('summary');
+                    userService.createUser(userData).then(function (savedData) {
+                        userData.saved = savedData;
+                        $state.go('summary');
+                    });
                 }
             }
         });

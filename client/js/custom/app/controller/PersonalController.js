@@ -7,13 +7,10 @@
 
     angular
         .module('app')
-        .controller('PersonalController', function ($scope, $state, userData, validationService) {
+        .controller('PersonalController', function ($scope, $state, userData, genderService) {
             $scope.userData = userData;
 
-            $scope.genders = [
-                { id: 1, text: 'male'},
-                { id: 2, text: 'female'}
-            ];
+            $scope.genders = genderService.getList();
 
             $scope.nextStep = function() {
                 if ($scope.personalForm.$valid) {

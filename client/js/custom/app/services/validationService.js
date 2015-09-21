@@ -42,7 +42,7 @@
                         if (isBlank(userData.name) || !isCharactersFit(userData.name)) {
                             return false;
                         }
-                        return !(isBlank(userData.lastName) || isBlank(userData.birthday) || isBlank(userData.userGender));
+                        return !(isBlank(userData.lastName) || isBlank(userData.birthday) || isBlank(userData.gender));
 
                     },
                     'contacts': function () {
@@ -51,7 +51,9 @@
                     },
                     'terms': function () {
                         return !isBlank(userData.terms);
-
+                    },
+                    'summary': function () {
+                        return true;
                     }
 
                 };

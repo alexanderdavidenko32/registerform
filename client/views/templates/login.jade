@@ -29,7 +29,7 @@ md-content
 
             md-input-container
                 label Password confirmation
-                input(ng-model="userData.password_confirmation" name="password_confirmation" type="password" ng-required="true" password-validator=)
+                input(ng-model="userData.password_confirmation" name="password_confirmation" type="password" ng-required="true" password-validator)
                 div(ng-messages="loginForm.password_confirmation.$error")
                     div(ng-message="required") This is required.
                     div(ng-message="passwordConfirmation") Password confirmation is not correct

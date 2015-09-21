@@ -7,20 +7,21 @@ md-content
 
     .center-form
         md-content
-            div Login : {{login}}
-            div Email : {{email}}
-            div Password : {{password}}
-            div Password confirmation : {{password_confirmation}}
+            div Login : {{userData.saved.login}}
+            div Email : {{userData.saved.email}}
+            div Password : {{userData.saved.password}}
+            div Password confirmation : {{userData.saved.password_confirmation}}
 
-            div Name : {{name}}
-            div Last name : {{lastName}}
+            div Name : {{userData.saved.name}}
+            div Last name : {{userData.saved.lastName}}
             div Gender : {{gender}}
-            div Additional info : {{additionalInfo}}
+            div Additional info : {{userData.saved.additionalInfo}}
 
-            div Phone : {{phone}}
-            div Country : {{country}}
-            div City : {{city}}
-            div Address : {{address}}
+            div Phone : {{userData.saved.phone}}
+            div Country : {{userData.saved.country}}
+            div City : {{userData.saved.city}}
+            div Address : {{userData.saved.address}}
 
-            div Terms : {{terms}}
+            div Terms : {{userData.saved.terms}}
+
         md-button.next-button(type="submit" ng-click="nextStep()") Next

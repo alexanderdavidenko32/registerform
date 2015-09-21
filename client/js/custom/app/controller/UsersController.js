@@ -7,9 +7,13 @@
 
     angular
         .module('app')
-        .controller('UsersController', function ($scope, $state, userData) {
+        .controller('UsersController', function ($scope, $state, userData, userService) {
             $scope.userData = userData;
-            $scope.users = [{name: 'user1'}, {name: 'user2'}]
+
+            userService.getUsers().then(function (users) {
+                $scope.users = users.items;
+            })
+            //$scope.users = [{name: 'user1'}, {name: 'user2'}]
 
             $scope.nextStep = function() {
                 $state.go('login');
