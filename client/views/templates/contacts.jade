@@ -10,9 +10,10 @@ md-content
         form(name="contactsForm")
             md-input-container
                 label Phone
-                input(ng-model="userData.phone" name="phone" ng-required="true" autofocus="true")
+                input(ng-model="userData.phone" name="phone" ng-required="true" autofocus="true" phone-validator)
                 div(ng-messages="contactsForm.phone.$error")
                     div(ng-message="required") This is required.
+                    div(ng-message="phoneValidity") Phone number is not valid.
 
             md-input-container
                 label Country

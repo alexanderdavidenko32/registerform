@@ -9,10 +9,11 @@ md-content
         form(name="loginForm")
             md-input-container
                 label Login
-                input(ng-model="userData.login" name="login" ng-required="true" md-maxlength="30" autofocus="true")
+                input(ng-model="userData.login" name="login" ng-required="true" md-maxlength="30" autofocus="true" username-validator)
                 div(ng-messages="loginForm.login.$error")
                     div(ng-message="required") This is required.
                     div(ng-message="md-maxlength") The login has to be less than 30 characters long.
+                    div(ng-message="usernamePresence") Username is exists.
 
             md-input-container
                 label Email

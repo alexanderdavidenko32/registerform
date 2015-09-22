@@ -7,7 +7,7 @@
 
     angular
         .module('app')
-        .controller('ContactsController', function ($scope, $state, userData, validationService) {
+        .controller('ContactsController', function ($scope, $state, userData) {
             $scope.userData = userData;
 
             $scope.nextStep = function() {

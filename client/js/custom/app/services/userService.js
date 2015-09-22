@@ -16,7 +16,14 @@
                 });
 
                 return userList.read().$promise;
+            };
 
+            users.getUser = function (username) {
+                var user = $resource('/api/user', {}, {
+                    read: {method: 'POST'}
+                });
+
+                return user.read({user: {name: username}}).$promise;
             };
 
             users.createUser = function (userData) {

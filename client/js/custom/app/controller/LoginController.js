@@ -7,7 +7,7 @@
 
     angular
         .module('app')
-        .controller('LoginController', function ($scope, $state, userData, validationService) {
+        .controller('LoginController', function ($scope, $state, userData) {
             $scope.userData = userData;
 
             $scope.nextStep = function() {

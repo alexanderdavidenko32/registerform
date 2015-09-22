@@ -43,7 +43,6 @@
                             return false;
                         }
                         return !(isBlank(userData.lastName) || isBlank(userData.birthday) || isBlank(userData.gender));
-
                     },
                     'contacts': function () {
                         return !(isBlank(userData.phone) || isBlank(userData.country) || isBlank(userData.city));
@@ -53,7 +52,7 @@
                         return !isBlank(userData.terms);
                     },
                     'summary': function () {
-                        return true;
+                        return !!userData.saved;
                     }
 
                 };

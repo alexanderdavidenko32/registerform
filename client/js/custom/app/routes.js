@@ -66,20 +66,20 @@
                 });
         });
 
-    //angular
-    //    .module('app')
-    //    .run(function($rootScope, $state, validationService) {
-    //        $rootScope.$on('$stateChangeStart', function(event, next) {
-    //            if (!$state.current.abstract
-    //                && !validationService.isStepValid($state.current)
-    //                && $state.current.stepOrder < next.stepOrder) {
-    //
-    //                event.preventDefault();
-    //            }
-    //            if ($state.current.abstract && next.name !== 'login' && !validationService.isStepValid(next)) {
-    //                event.preventDefault();
-    //                $state.go('login');
-    //            }
-    //        });
-    //    });
+    angular
+        .module('app')
+        .run(function($rootScope, $state, validationService) {
+            $rootScope.$on('$stateChangeStart', function(event, next) {
+                if (!$state.current.abstract
+                    && !validationService.isStepValid($state.current)
+                    && $state.current.stepOrder < next.stepOrder) {
+
+                    event.preventDefault();
+                }
+                if ($state.current.abstract && next.name !== 'login' && !validationService.isStepValid(next)) {
+                    event.preventDefault();
+                    $state.go('login');
+                }
+            });
+        });
 })();

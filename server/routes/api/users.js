@@ -4,23 +4,29 @@
  */
 var path = require('path'),
     validateUser, findUser,
-    create, read;
+    create, read, readUser;
 
 var users = {
     'items': [
-        { name: 'admin', email: 'admin@admin.com'},
-        { name: 'user1', email: 'user1@user1.com'}
+        { login: 'admin', name: 'Admin', email: 'admin@admin.com'},
+        { login: 'user1', name: 'User 1', email: 'user1@user1.com'}
     ]
 };
 
 create = function (req, res) {
+    if (findUser(req.body.user)) {
+        res.send(400, 'User is already exists');
+        res.end();
+
+        return false;
+    }
     if (validateUser(req.body.user)) {
         users.items.push(req.body.user);
     
         res.end(JSON.stringify(req.body.user));
-        
     } else {
         res.send(400, 'User is not valid');
+        res.end();
     }
 };
 
@@ -28,14 +34,22 @@ read = function(req, res) {
     res.end(JSON.stringify(users));
 };
 
+readUser = function (req, res) {
+    var user = findUser(req.body.user),
+        result = user ? JSON.stringify({response: user}) : '';
+
+    res.end(result);
+};
+
 findUser = function (user) {
-    // TODO: implement and use in create method for validation
+    return users.items.filter(function (item) {
+       return item.login === user.login;
+    })[0];
 };
 
 validateUser = function (user) {
     var isBlank = function(value) {
         return !value;
-
     };
     var isCharactersFit = function(value) {
         return value.length <= 30;
@@ -83,3 +97,4 @@ validateUser = function (user) {
 
 module.exports.create = create;
 module.exports.read = read;
+module.exports.readUser = readUser;

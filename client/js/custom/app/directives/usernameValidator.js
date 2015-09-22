@@ -7,7 +7,21 @@
 
     angular
         .module('app')
-        .directive('usernameValidator', function () {
-            //TODO: create async validator to check for username presence
+        .directive('usernameValidator', function ($q, userService) {
+            return {
+                restrict: 'A',
+                require: 'ngModel',
+                link: function (scope, element, attributes, ngModel) {
+                    ngModel.$asyncValidators.usernamePresence = function (modelValue) {
+                        var deferred = $q.defer();
+
+                        userService.getUser(modelValue).then(function (data) {
+                            return !!data.response ? deferred.reject() : deferred.resolve();
+                        });
+
+                        return deferred.promise;
+                    }
+                }
+            }
         });
 })();
