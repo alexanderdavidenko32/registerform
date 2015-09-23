@@ -18,31 +18,45 @@
                         states = $state.get(),
                         steps = filter(states, {isStep: true});
 
-                    var isStepEnabled = function(item) {
-                        return steps.reduce(function (previousValue, currentValue, index) {
-                            var tmpStep = steps[index];
+                    /**
+                     * adds enabled and active fields to steps
+                     */
+                    var processSteps = function () {
+                        var isStepEnabled = function(item) {
+                            return steps.reduce(function (previousValue, currentValue, index) {
+                                var tmpStep = steps[index];
 
-                            if (previousValue === false) {
-                                return false;
-                            } else {
-                                if (tmpStep.stepOrder <= item.stepOrder) {
-                                    return validationService.isStepValid(steps[index]);
+                                if (previousValue === false) {
+                                    return false;
                                 } else {
-                                    return previousValue;
+                                    if (tmpStep.stepOrder <= item.stepOrder) {
+                                        return validationService.isStepValid(steps[index]);
+                                    } else {
+                                        return previousValue;
+                                    }
                                 }
+                            }, true);
+                        };
+
+                        steps.map(function (item) {
+                            item.active = item === $state.current;
+
+                            if ($state.current  === item ) {
+                                item.enabled = true;
+                            } else {
+                                item.enabled = isStepEnabled(item);
                             }
-                        }, true);
+                        });
                     };
 
-                    steps.map(function (item, index) {
-                        item.active = item === $state.current;
+                    processSteps();
 
-                        if ($state.current  === item ) {
-                            item.enabled = true;
-                        } else {
-                            item.enabled = isStepEnabled(item);
-                        }
+                    $scope.$watch(function () {
+                        return validationService.isStepValid($state.current);
+                    }, function () {
+                        processSteps();
                     });
+
                     $scope.steps = steps;
                 }
             };

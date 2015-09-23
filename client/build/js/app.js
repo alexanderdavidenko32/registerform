@@ -4,8 +4,8 @@ $templateCache.put("personal.html","\n<!--\n@author: Alexander.Davidenko \n@date
 $templateCache.put("summary.html","\n<!--\n@author: Alexander.Davidenko \n@date: 9/18/15\n\n-->\n<md-content>\n  <login-steps-menu steps=\"steps\"></login-steps-menu>\n  <div class=\"center-form\">\n    <md-content>\n      <div>Login : {{userData.saved.login}}</div>\n      <div>Email : {{userData.saved.email}}</div>\n      <div>Password : {{userData.saved.password}}</div>\n      <div>Password confirmation : {{userData.saved.password_confirmation}}</div>\n      <div>Name : {{userData.saved.name}}</div>\n      <div>Last name : {{userData.saved.lastName}}</div>\n      <div>Gender : {{gender}}</div>\n      <div>Additional info : {{userData.saved.additionalInfo}}</div>\n      <div>Phone : {{userData.saved.phone}}</div>\n      <div>Country : {{userData.saved.country}}</div>\n      <div>City : {{userData.saved.city}}</div>\n      <div>Address : {{userData.saved.address}}</div>\n      <div>Terms : {{userData.saved.terms}}</div>\n    </md-content>\n    <md-button type=\"submit\" ng-click=\"nextStep()\" class=\"next-button\">Next</md-button>\n  </div>\n</md-content>");
 $templateCache.put("terms.html","\n<!--\n@author: Alexander.Davidenko \n@date: 9/18/15\n\n-->\n<md-content>\n  <login-steps-menu steps=\"steps\"></login-steps-menu>\n  <div class=\"center-form\">\n    <form name=\"termsForm\">\n      <md-content class=\"terms-of-use\">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</md-content>\n      <md-input-container>\n        <md-checkbox ng-model=\"userData.terms\" name=\"terms\" ng-required=\"true\" autofocus=\"true\">agree with terms of use</md-checkbox>\n        <div ng-messages=\"termsForm.terms.$error\">\n          <div ng-message=\"required\">This is required.</div>\n        </div>\n      </md-input-container>\n      <md-button type=\"submit\" ng-click=\"nextStep()\" ng-disabled=\"!termsForm.$valid\" class=\"next-button\">Next</md-button>\n    </form>\n  </div>\n</md-content>");
 $templateCache.put("users.html","\n<!--\n@author: Alexander.Davidenko \n@date: 9/18/15\n\n-->\n<md-content>\n  <login-steps-menu steps=\"steps\"></login-steps-menu>\n  <div class=\"center-form\">\n    <md-content>\n      <md-list class=\"users\">\n        <md-list-item ng-repeat=\"user in users\" class=\"md-2-line\"><span class=\"user\"><i class=\"material-icons\">person</i><span>{{user.name}}</span></span></md-list-item>\n      </md-list>\n    </md-content>\n  </div>\n</md-content>");
-$templateCache.put("errors/page404.html","\n<h1>404 Not found</h1>");
-$templateCache.put("directives/loginStepsMenu.html","\n<!--\n@author: Alexander.Davidenko \n@date: 9/17/15\n\n-->\n<div class=\"steps-menu\">\n  <ul>\n    <li ng-repeat=\"step in steps track by $index\">\n      <md-button ui-sref=\"{{step.name}}\" ng-class=\"{\'md-primary\': step.active}\" ng-disabled=\"!step.enabled\">{{step.text}}</md-button>\n    </li>\n  </ul>\n</div>");}]);
+$templateCache.put("directives/loginStepsMenu.html","\n<!--\n@author: Alexander.Davidenko \n@date: 9/17/15\n\n-->\n<div class=\"steps-menu\">\n  <ul>\n    <li ng-repeat=\"step in steps track by $index\">\n      <md-button ui-sref=\"{{step.name}}\" ng-class=\"{\'md-primary\': step.active}\" ng-disabled=\"!step.enabled\">{{step.text}}</md-button>\n    </li>\n  </ul>\n</div>");
+$templateCache.put("errors/page404.html","\n<h1>404 Not found</h1>");}]);
 /**
  * @author: Alexander.Davidenko
  * @date: 9/14/15
@@ -277,31 +277,45 @@ $templateCache.put("directives/loginStepsMenu.html","\n<!--\n@author: Alexander.
                         states = $state.get(),
                         steps = filter(states, {isStep: true});
 
-                    var isStepEnabled = function(item) {
-                        return steps.reduce(function (previousValue, currentValue, index) {
-                            var tmpStep = steps[index];
+                    /**
+                     * adds enabled and active fields to steps
+                     */
+                    var processSteps = function () {
+                        var isStepEnabled = function(item) {
+                            return steps.reduce(function (previousValue, currentValue, index) {
+                                var tmpStep = steps[index];
 
-                            if (previousValue === false) {
-                                return false;
-                            } else {
-                                if (tmpStep.stepOrder <= item.stepOrder) {
-                                    return validationService.isStepValid(steps[index]);
+                                if (previousValue === false) {
+                                    return false;
                                 } else {
-                                    return previousValue;
+                                    if (tmpStep.stepOrder <= item.stepOrder) {
+                                        return validationService.isStepValid(steps[index]);
+                                    } else {
+                                        return previousValue;
+                                    }
                                 }
+                            }, true);
+                        };
+
+                        steps.map(function (item) {
+                            item.active = item === $state.current;
+
+                            if ($state.current  === item ) {
+                                item.enabled = true;
+                            } else {
+                                item.enabled = isStepEnabled(item);
                             }
-                        }, true);
+                        });
                     };
 
-                    steps.map(function (item, index) {
-                        item.active = item === $state.current;
+                    processSteps();
 
-                        if ($state.current  === item ) {
-                            item.enabled = true;
-                        } else {
-                            item.enabled = isStepEnabled(item);
-                        }
+                    $scope.$watch(function () {
+                        return validationService.isStepValid($state.current);
+                    }, function () {
+                        processSteps();
                     });
+
                     $scope.steps = steps;
                 }
             };
@@ -424,12 +438,12 @@ $templateCache.put("directives/loginStepsMenu.html","\n<!--\n@author: Alexander.
                 return userList.read().$promise;
             };
 
-            users.getUser = function (username) {
+            users.getUser = function (login) {
                 var user = $resource('/api/user', {}, {
                     read: {method: 'POST'}
                 });
 
-                return user.read({user: {name: username}}).$promise;
+                return user.read({user: {login: login}}).$promise;
             };
 
             users.createUser = function (userData) {
