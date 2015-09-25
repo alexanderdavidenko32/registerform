@@ -137,135 +137,6 @@ $templateCache.put("errors/page404.html","\n<h1>404 Not found</h1>");}]);
 
     angular
         .module('app')
-        .controller('ContactsController', function ($scope, $state, userData) {
-            $scope.userData = userData;
-
-            $scope.nextStep = function() {
-                if ($scope.contactsForm.$valid) {
-                    $state.go('terms');
-                }
-            }
-        });
-})();
-/**
- * @author: Alexander.Davidenko
- * @date: 9/14/15
- */
-(function () {
-    'use strict';
-
-    angular
-        .module('app')
-        .controller('LoginController', function ($scope, $state, userData) {
-            $scope.userData = userData;
-
-            $scope.nextStep = function() {
-                if ($scope.loginForm.$valid) {
-                    $state.go('personal');
-                }
-            }
-        });
-})();
-/**
- * @author: Alexander.Davidenko
- * @date: 9/17/15
- */
-(function () {
-    'use strict';
-
-    angular
-        .module('app')
-        .controller('PersonalController', function ($scope, $state, userData, genderService) {
-            $scope.userData = userData;
-
-            $scope.genders = genderService.getList();
-
-            $scope.nextStep = function() {
-                if ($scope.personalForm.$valid) {
-                    $state.go('contacts');
-                }
-            }
-        });
-})();
-/**
- * @author: Alexander.Davidenko
- * @date: 9/17/15
- */
-(function () {
-    'use strict';
-
-    angular
-        .module('app')
-        .controller('SummaryController', function ($scope, $state, $filter, userData, genderService) {
-            var filter = $filter('filter'),
-                genders = genderService.getList(),
-                filtered;
-
-            $scope.userData = userData;
-
-            if (userData.saved) {
-                filtered = filter(genders, {'id': userData.saved.gender});
-                $scope.gender = filtered.length && filtered[0].text;
-            }
-
-            $scope.nextStep = function() {
-                $state.go('users');
-            }
-        });
-})();
-/**
- * @author: Alexander.Davidenko
- * @date: 9/17/15
- */
-(function () {
-    'use strict';
-
-    angular
-        .module('app')
-        .controller('TermsController', function ($scope, $state, userData, userService) {
-            $scope.userData = userData;
-
-            $scope.nextStep = function() {
-                if ($scope.termsForm.$valid) {
-                    userService.createUser(userData).then(function (savedData) {
-                        userData.saved = savedData;
-                        $state.go('summary');
-                    });
-                }
-            }
-        });
-})();
-/**
- * @author: Alexander.Davidenko
- * @date: 9/18/15
- */
-(function () {
-    'use strict';
-
-    angular
-        .module('app')
-        .controller('UsersController', function ($scope, $state, userData, userService) {
-            $scope.userData = userData;
-
-            userService.getUsers().then(function (users) {
-                $scope.users = users.items;
-            })
-            //$scope.users = [{name: 'user1'}, {name: 'user2'}]
-
-            $scope.nextStep = function() {
-                $state.go('login');
-            }
-        });
-})();
-/**
- * @author: Alexander.Davidenko
- * @date: 9/17/15
- */
-(function () {
-    'use strict';
-
-    angular
-        .module('app')
         .directive('loginStepsMenu', function () {
             return {
                 restrict: 'E',
@@ -391,6 +262,135 @@ $templateCache.put("errors/page404.html","\n<h1>404 Not found</h1>");}]);
                         return deferred.promise;
                     }
                 }
+            }
+        });
+})();
+/**
+ * @author: Alexander.Davidenko
+ * @date: 9/17/15
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app')
+        .controller('ContactsController', function ($scope, $state, userData) {
+            $scope.userData = userData;
+
+            $scope.nextStep = function() {
+                if ($scope.contactsForm.$valid) {
+                    $state.go('terms');
+                }
+            }
+        });
+})();
+/**
+ * @author: Alexander.Davidenko
+ * @date: 9/14/15
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app')
+        .controller('LoginController', function ($scope, $state, userData) {
+            $scope.userData = userData;
+
+            $scope.nextStep = function() {
+                if ($scope.loginForm.$valid) {
+                    $state.go('personal');
+                }
+            }
+        });
+})();
+/**
+ * @author: Alexander.Davidenko
+ * @date: 9/17/15
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app')
+        .controller('PersonalController', function ($scope, $state, userData, genderService) {
+            $scope.userData = userData;
+
+            $scope.genders = genderService.getList();
+
+            $scope.nextStep = function() {
+                if ($scope.personalForm.$valid) {
+                    $state.go('contacts');
+                }
+            }
+        });
+})();
+/**
+ * @author: Alexander.Davidenko
+ * @date: 9/17/15
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app')
+        .controller('SummaryController', function ($scope, $state, $filter, userData, genderService) {
+            var filter = $filter('filter'),
+                genders = genderService.getList(),
+                filtered;
+
+            $scope.userData = userData;
+
+            if (userData.saved) {
+                filtered = filter(genders, {'id': userData.saved.gender});
+                $scope.gender = filtered.length && filtered[0].text;
+            }
+
+            $scope.nextStep = function() {
+                $state.go('users');
+            }
+        });
+})();
+/**
+ * @author: Alexander.Davidenko
+ * @date: 9/17/15
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app')
+        .controller('TermsController', function ($scope, $state, userData, userService) {
+            $scope.userData = userData;
+
+            $scope.nextStep = function() {
+                if ($scope.termsForm.$valid) {
+                    userService.createUser(userData).then(function (savedData) {
+                        userData.saved = savedData;
+                        $state.go('summary');
+                    });
+                }
+            }
+        });
+})();
+/**
+ * @author: Alexander.Davidenko
+ * @date: 9/18/15
+ */
+(function () {
+    'use strict';
+
+    angular
+        .module('app')
+        .controller('UsersController', function ($scope, $state, userData, userService) {
+            $scope.userData = userData;
+
+            userService.getUsers().then(function (users) {
+                $scope.users = users.items;
+            })
+            //$scope.users = [{name: 'user1'}, {name: 'user2'}]
+
+            $scope.nextStep = function() {
+                $state.go('login');
             }
         });
 })();

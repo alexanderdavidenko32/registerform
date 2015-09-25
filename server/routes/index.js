@@ -1,9 +1,9 @@
 var indexRoute = require('./IndexRoute'),
-    api = require('./api'),
+    apiRouter = require('./api'),
     routes;
 
 routes = function(app) {
-    api(app);
+    app.use('/api', apiRouter);
 
     app.get('*', indexRoute);
 };

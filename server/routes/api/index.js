@@ -3,15 +3,20 @@
  * @date: 9/21/15
  */
 var users = require('./users'),
+    express = require('express'),
+    apiRouter = express.Router(),
     routes;
 
-routes = function(app) {
+routes = function() {
 
-    var apiPrefix = '/api';
+    apiRouter.route('/users')
+        .get(users.read)
+        .post(users.create);
 
-    app.post(apiPrefix + '/users', users.create);
-    app.get(apiPrefix + '/users', users.read);
-    app.get(apiPrefix + '/user/:login', users.readUser);
+    apiRouter.route('/user/:login')
+        .get(users.readUser);
+
+    return apiRouter;
 };
 
-module.exports = routes;
+module.exports = routes();

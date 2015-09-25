@@ -15,7 +15,7 @@ var users = {
 
 create = function (req, res) {
     if (findUser(req.body.user)) {
-        res.send(400, 'User is already exists');
+        res.status(400).send('User is already exists');
         res.end();
 
         return false;
