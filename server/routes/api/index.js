@@ -11,7 +11,7 @@ routes = function(app) {
 
     app.post(apiPrefix + '/users', users.create);
     app.get(apiPrefix + '/users', users.read);
-    app.post(apiPrefix + '/user', users.readUser);
+    app.get(apiPrefix + '/user/:login', users.readUser);
 };
 
 module.exports = routes;

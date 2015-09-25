@@ -35,7 +35,7 @@ read = function(req, res) {
 };
 
 readUser = function (req, res) {
-    var user = findUser(req.body.user),
+    var user = findUser({login: req.params.login}),
         result = user ? JSON.stringify({response: user}) : '';
 
     res.end(result);

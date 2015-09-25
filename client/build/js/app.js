@@ -439,11 +439,11 @@ $templateCache.put("errors/page404.html","\n<h1>404 Not found</h1>");}]);
             };
 
             users.getUser = function (login) {
-                var user = $resource('/api/user', {}, {
-                    read: {method: 'POST'}
+                var user = $resource('/api/user/' + login, {}, {
+                    read: {method: 'GET'}
                 });
 
-                return user.read({user: {login: login}}).$promise;
+                return user.read().$promise;
             };
 
             users.createUser = function (userData) {
